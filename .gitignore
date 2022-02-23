@@ -1,0 +1,14 @@
+# Binaries, plugins, libs
+*.dll
+*.dylib
+*.exe
+*.exe~
+*.so
+/bin
+
+# Testing
+*.test
+*.tmp
+
+# Development
+.env
