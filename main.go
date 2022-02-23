@@ -12,9 +12,11 @@ import (
 )
 
 func main() {
-	dotEnvErr := godotenv.Load()
-	if dotEnvErr != nil {
-		log.Fatal("Error loading .env file")
+	if os.Getenv("APP_ENV") != "production" {
+		dotEnvErr := godotenv.Load()
+		if dotEnvErr != nil {
+			log.Fatal("Error loading .env file")
+		}
 	}
 
 	models.ConnectDatabase()
