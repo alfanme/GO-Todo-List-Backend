@@ -18,7 +18,13 @@ func ConnectDatabase() {
 		log.Fatal("Error loading .env file")
 	}
 
-	dsn := os.Getenv("DB_DSN")
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USER")
+	pwd := os.Getenv("DB_PWD")
+	dbname := os.Getenv("DB_NAME")
+	dbport := os.Getenv("DB_PORT")
+
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=prefer TimeZone=Asia/Jakarta", host, user, pwd, dbname, dbport)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
