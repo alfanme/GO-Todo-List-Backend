@@ -38,6 +38,9 @@ func main() {
 	r.PATCH("/api/todos/:id", controllers.UpdateTodo)
 	r.DELETE("/api/todos/:id", controllers.DeleteTodo)
 
-	port := os.Getenv("API_PORT")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5000"
+	}
 	r.Run(":" + port)
 }
