@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 	"todo_list/controllers"
 	"todo_list/models"
 
@@ -21,7 +22,14 @@ func main() {
 
 	models.ConnectDatabase()
 	r := gin.Default()
-	r.Use(cors.Default())
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost", "https://todo-list-golang.herokuapp.com/"},
+		AllowMethods:     []string{"GET", "POST", "PATCH", "DELETE"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge: 12 * time.Hour,
+	  }))
 
 	r.GET("/", controllers.Home)
 	r.GET("/api/todos", controllers.GetTodos)
@@ -31,8 +39,5 @@ func main() {
 	r.DELETE("/api/todos/:id", controllers.DeleteTodo)
 
 	port := os.Getenv("API_PORT")
-	if port == "" {
-		port = "8000"
-	}
 	r.Run(":" + port)
 }
